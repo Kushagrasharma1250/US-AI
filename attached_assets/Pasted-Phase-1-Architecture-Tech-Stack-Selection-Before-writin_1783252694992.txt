@@ -1,0 +1,62 @@
+Phase 1: Architecture & Tech Stack Selection
+Before writing code, you need to decide on your core components. A modern stack for this typically involves:
+
+Frontend: React.js, Vue.js, or Next.js (good for interactive UIs). If you want to build it entirely in Python, Streamlit or Dash are great for rapid prototyping.
+
+Backend: Python (FastAPI or Flask) is practically mandatory here due to its rich ecosystem for AI, data manipulation, and PDF parsing.
+
+Storage: AWS S3 or Google Cloud Storage for handling raw file uploads.
+
+Phase 2: Input Ingestion & Parsing (The "Read" Layer)
+Your app needs to accept three completely different file formats and extract their raw data.
+
+PDFs: * Text-based: Use libraries like PyMuPDF (Fitz) or pypdf.
+
+Scanned/Image-based: Use OCR (Optical Character Recognition) tools like Tesseract or cloud APIs (Google Vision, AWS Textract).
+
+Excel (.xlsx / .csv): Use pandas in Python to read, clean, and structure the tabular data.
+
+Images (PNG/JPG): Use OCR for text extraction, or Vision LLMs (like GPT-4o or Claude 3.5 Sonnet) to describe the visual content.
+
+Phase 3: AI Summarization & Data Synthesis (The "Brain" Layer)
+Once you have the raw text and data, you need to synthesize it.
+
+LLM Integration: Use an LLM API (OpenAI, Anthropic, or open-source models via Hugging Face/Ollama) to summarize the content.
+
+Prompt Engineering: You will need custom prompts depending on the input type.
+
+For Excel: "Summarize the key trends, highs, lows, and anomalies in this data."
+
+For Text/PDF: "Provide a bulleted summary of the core arguments and key metrics."
+
+Structured Output: Force the LLM to output data in a structured format like JSON. This is crucial because your visualization layer needs predictable data to build the "interactive image."
+
+Phase 4: The Interactive Visual (The "Display" Layer)
+When you say "singular interactive image," you likely mean an interactive dashboard, canvas, or infographics node map.
+
+Option A: The Canvas Approach (Highly Interactive)
+
+Use libraries like React Flow or D3.js.
+
+You can generate a visual "mind map" or "flowchart" where the core summary is in the center, and clicking nodes expands the details, data charts, or raw snippets from the Excel/PDF files.
+
+Option B: The Dashboard Approach (Data-Heavy)
+
+Use Plotly or Chart.js combined with a clean UI layout.
+
+The "image" is a beautifully rendered infographic/dashboard that lets users hover over charts to see exact Excel numbers, or click sections to see text summaries.
+
+Option C: SVG Manipulation
+
+Have the backend generate a dynamic SVG graphic based on the JSON summary, and use frontend Javascript to make elements hoverable and clickable.
+
+Phase 5: MVP Roadmap (Step-by-Step Execution)
+To keep from getting overwhelmed, build it in this exact order:
+
+Milestone 1 (Local Script): Write a Python script that takes an Excel file and a PDF, extracts the data, and prints a combined text summary to your terminal using an LLM.
+
+Milestone 2 (The JSON Bridge): Modify your script so the LLM outputs a specific JSON structure (e.g., { "title": "", "key_metrics": [], "summary_points": [] }).
+
+Milestone 3 (Basic UI): Build a simple frontend where a user can upload one file and see that JSON converted into a basic interactive chart or mind map.
+
+Milestone 4 (Integration & Polish): Combine the ingestion pipeline with the frontend, add support for multi-file uploads, and style the interactive visualizer.
