@@ -1,0 +1,1 @@
+- [Python backend on Nix](python-nix-workflow.md) — uvicorn must use absolute path; workflow CWD is not workspace root; install via installLanguagePackages not pip.
